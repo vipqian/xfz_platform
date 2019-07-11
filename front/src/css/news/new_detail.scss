@@ -1,0 +1,189 @@
+@import "../../common/init";
+@import "../../common/constant";
+@import "../../common/header";
+@import "../../common/sidebar-wrapper";
+@import "../../common/body";
+@import "../../common/footer";
+
+
+
+.main{
+  .wrapper{
+    .main-content-wrapper{
+      background: #fff;
+      padding: 20px;
+      box-sizing: border-box;
+      .news-wrapper{
+        .title{
+          color: $mainFontColor;
+          font-size: 24px;
+          font-weight: 400;
+        }
+
+        .news-info{
+          overflow: hidden;
+          margin-top: 20px;
+          color: $assistFontColor;
+          font-size: 14px;
+          height: 28px;
+          line-height: 28px;
+
+
+
+          .info-group{
+            float: left;
+
+
+            .pub-time{
+              margin-left: 15px;
+            }
+
+            .category{
+              margin-left: 20px;
+              background: $themeColor;
+              color: #ffffff;
+              padding: 0 5px;
+              border-radius: 2px;
+            }
+          }
+
+          .share-group{
+            float: right;
+            margin-right: 10px;
+            overflow: hidden;
+
+            span{
+              float: left;
+            }
+
+            .share-item{
+               background: url("https://www.xfz.cn/static/build/images/share.png") no-repeat;
+              background-size: 240%;
+              width: 28px;
+              height: 28px;
+              float: left;
+              cursor: pointer;
+            }
+
+            .weixin{
+
+            }
+            .weibo{
+              background-position: -39px 0;
+              margin-left: 10px;
+            }
+          }
+        }
+
+
+        .article{
+          margin-top: 19px;
+          img{
+            width: 100%;
+          }
+        }
+
+      }
+
+
+      .comment-wrapper{
+        border-top: 1px solid $lineColor;
+        padding-top: 20px;
+
+
+        .title{
+          color: $mainFontColor;
+          font-size: 18px;
+          font-weight: 400;
+        }
+
+        .comment-textarea{
+          margin-top: 10px;
+          width: 100%;
+          font-size: 14px;
+          outline: none;
+          resize: none;
+          border-radius: 5px;
+          border: 1px solid #cccccc;
+          padding: 6px 10px;
+          box-sizing: border-box;
+        }
+
+
+        .nologin-textarea{
+          height: 40px;
+          line-height: 26px;
+          overflow: hidden;
+        }
+
+        .logined-textarea{
+          height: 80px;
+        }
+
+        .submit-btn-group{
+          float: right;
+          margin-top: 10px;
+
+          .submit-btn{
+            background: $themeColor;
+            outline: none;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #ffffff;
+            padding: 6px 10px;
+
+            &:hover{
+              cursor: pointer;
+            }
+          }
+        }
+      }
+
+      .comment-list{
+        margin-top: 10px;
+
+        li{
+          border-bottom: 1px solid $lineColor;
+          padding-top: 20px;
+          padding-bottom: 10px;
+
+          .comment-info{
+            height: 40px;
+            line-height: 40px;
+            color: $assistFontColor;
+            font-size: 16px;
+
+            .avatar{
+              float: left;
+              width: 30px;
+              height: 30px;
+              border-radius: 50%;
+            }
+
+            .author{
+              float: left;
+              margin-left: 20px;
+            }
+            .pub-time{
+              float: right;
+            }
+          }
+
+          .comment-content{
+            margin-left: 60px;
+            margin-top: 10px;
+                        }
+          &:first-of-type{
+          margin-top: 55px;
+        }
+        }
+
+
+      }
+
+    }
+  }
+}
+
+
+

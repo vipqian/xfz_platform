@@ -1,0 +1,48 @@
+{% extends 'cms/news/../base.html' %}
+
+{% block title %}
+新闻列表|CMS后台管理系统
+{% endblock %}
+
+{% block content-header %}
+新闻列表
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <a href="{% url 'cms:write_news' %}"><button class="btn btn-primary pull-right">新增新闻</button></a>
+
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>id</th>
+                        <th>标题</th>
+                        <th>作者</th>
+                        <th>操作</th>
+
+                        </thead>
+                        <tbody>
+                        {% for news in newses%}
+                            <tr>
+                            <td>{{ news.pk }}</td>
+
+                            <td>{{ news.title }}</td>
+                            <td>{{ news.author }}</td>
+                            <td>
+                                <a href="{% url 'cms:editor_news_page' %}?news_id={{ news.id }}"><button class="btn btn-warning btn-xs">编辑</button></a>
+                                <a href="{% url 'cms:delete_news' %}?news_id={{ news.id }}"><button class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

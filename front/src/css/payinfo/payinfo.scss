@@ -1,0 +1,95 @@
+@import "../../common/init.scss";
+@import "../../common/constant.scss";
+@import "../../common/header.scss";
+@import "../../common/body.scss";
+@import "../../common/sidebar-wrapper.scss";
+@import "../../common/footer.scss";
+
+
+
+.main{
+  .wrapper{
+    .main-content-wrapper{
+      width: $mainBoxWidth;
+      float: left;
+
+
+      .banner-group{
+        width: 100%;
+
+
+        img{
+          width: 100%;
+        }
+      }
+
+
+      .document-list{
+        padding: 20px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        align-content: flex-start;
+
+        li{
+          width: 370px;
+          height: 150px;
+          float: left;
+          overflow: hidden;
+          margin-bottom: 10px;
+
+
+            .category-group{
+              float: left;
+              background: url("http://xfz.cn/static/build/images/web-bp-pc.png") no-repeat;
+              width: 100px ;
+              height: 150px;
+            }
+
+
+          .document-info{
+            width: 270px;
+            height: 150px;
+            padding: 10px;
+            margin-left: 100px;
+            box-sizing: border-box;
+            border: 1px solid #cccccc;
+            position: relative;
+
+            .document-title{
+              font-size: 16px;
+              color: $mainFontColor;
+            }
+
+            .document-desc{
+              color: #878787;
+              font-size: 14px;
+              margin-top: 20px;
+            }
+            .document-price{
+              position: absolute;
+              right: 20px;
+              bottom: 10px;
+            }
+            .buy{
+              color: $buyColor;
+
+            }
+            .free{
+              color: $freeColor;
+
+            }
+
+
+          }
+
+        }
+
+      }
+
+    }
+  }
+}

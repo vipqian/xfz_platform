@@ -1,0 +1,46 @@
+{% extends 'cms/news/../base.html' %}
+
+{% block title %}
+新闻分类|CMS后台管理系统
+{% endblock %}
+
+
+{% block content-header %}
+新闻分类
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <a href="{% url 'cms:new_category_html' %}"><button class="btn btn-primary pull-right">添加分类</button></a>
+
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>分类名称</th>
+                        <th>新闻数量</th>
+                        <th>操作</th>
+
+                        </thead>
+                        <tbody>
+                        {% for category in categorys %}
+                            <tr>
+                            <td>{{ category.name }}</td>
+                            <td>{{ category.count }}</td>
+                            <td>
+                                <a href="{% url 'cms:editor_category' %}?category_id={{ category.id }}"><button class="btn btn-warning btn-xs">编辑</button></a>
+                                <a href="{% url 'cms:delete_category' %}?category_id={{ category.id }}"><button class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

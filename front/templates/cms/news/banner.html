@@ -1,0 +1,54 @@
+{% extends 'cms/news/../base.html' %}
+
+
+{% block title %}
+轮播图管理|CMS后台管理系统
+{% endblock %}
+
+
+{% block content-header %}
+轮播图管理
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <a href="{% url 'cms:add_banner' %}"><button class="btn btn-primary pull-right">添加轮播图</button></a>
+
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>缩略图</th>
+                        <th>图片地址</th>
+                        <th>跳转地址</th>
+                        <th>优先级</th>
+                        <th>操作</th>
+
+                        </thead>
+                        <tbody>
+                        {% for banner in banners %}
+                            <tr>
+                            <td><img src="{{ banner.image_url }}" alt="" style="width: 200px; height: 84px;"></td>
+
+                            <td>{{ banner.image_url }}</td>
+                            <td>{{ banner.link_to }}</td>
+                            <td>{{ banner.priority }}</td>
+                            <td>
+                                <a href="{% url 'cms:editor_banner' %}?banner_id={{ banner.id }}"><button class="btn btn-warning btn-xs">编辑</button></a>
+                                <a href="{% url 'cms:delete_banner' %}?banner_id={{ banner.id }}"><button class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,58 @@
+@import "../../common/init.scss";
+@import "../../common/constant.scss";
+@import "../../common/header.scss";
+@import "../../common/body.scss";
+@import "../../common/sidebar-wrapper.scss";
+@import "../../common/footer.scss";
+@import "../../common/news_list";
+
+
+.main{
+  .wrapper{
+    .main-content-wrapper{
+      width: $mainBoxWidth;
+
+        .search-group{
+          width: 732px;
+          height: 44px;
+          margin: 0 auto;
+          margin-top: 40px;
+          border: 1px solid #eeeeee;
+          overflow: hidden;
+
+          .search-input{
+            width: 612px;
+            height: 44px;
+            outline: none;
+            font-size: 14px;
+            box-sizing: border-box;
+            float: left;
+          }
+
+          .search-but{
+            float: left;
+            width: 120px;
+            background: $themeColor;
+            outline: none;
+            height: 44px;
+            display: block;
+            color: #ffffff;
+            font-size: 16px;
+
+          }
+
+        }
+
+        .list-outer-group{
+          .recomend-title{
+            margin-top: 40px;
+            margin-left: 20px;
+            font-size: 18px;
+          }
+
+          @include news_list();
+        }
+
+    }
+  }
+}

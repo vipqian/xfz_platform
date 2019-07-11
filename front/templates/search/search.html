@@ -1,0 +1,175 @@
+{% extends 'base/front_base.html' %}
+{% load  news_filters%}
+
+
+{% block title %}
+搜索
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/search/search.min.css' %}">
+{% endblock %}
+
+
+
+{% block main %}
+<div class="main">
+        <div class="wrapper">
+            <div class="main-content-wrapper">
+
+                <div class="search-group">
+                    <form action="" method="get">
+                        {% if p %}
+                             <input type="text" name="p" placeholder="请输入关键字" class="search-input" value="{{ p }}">
+                        {% else %}
+                            <input type="text" name="p" placeholder="请输入关键字" class="search-input">
+                        {% endif %}
+
+                        <input type="submit" value="搜索" class="search-but">
+                    </form>
+                </div>
+
+
+                <!--新闻列表-->
+                <div class="list-outer-group">
+                    <p class="recomend-title">热门推荐</p>
+
+                    <!--新闻列表-->
+                    <ul class="list-inner-group">
+                        {% if newses %}
+                            {% for news in newses %}
+                                <li>
+                            <!--缩略图-->
+                            <div class="thumbnail-group"><a href="/news/detail/{{ news.id }}"><img src="{{ news.thumbnail }}" alt=""></a></div>
+                            <div class="news-group">
+                                <p class="title"><a href="/news/detail/{{ news.id }}">{{ news.title }}</a></p>
+                                <p class="desc">{{ news.desc }}</p>
+                                <p class="more">
+                                    <span class="category">{{ news.category.name }}</span>
+                                    <span class="pub-time">{{ news.put_time|time_since}}</span>
+                                    <span class="author">{{ news.author }}</span>
+                                </p>
+                            </div>
+                        </li>
+                            {% endfor %}
+                        {% else %}
+                            <li>
+                            <!--缩略图-->
+                            <div class="thumbnail-group"><a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a></div>
+                            <div class="news-group">
+                                <p class="title"><a href="http://localhost:3000/templates/news/news_detail.html#">王健林卖掉进军海外首个项目:17亿售伦敦ONE六成股权</a></p>
+                                <p class="desc">外界关于万达要出售此前在海外投资项目的消息一直不断。</p>
+                                <p class="more">
+                                    <span class="category">深度报道</span>
+                                    <span class="pub-time">1小时前</span>
+                                    <span class="author">知了课堂</span>
+                                </p>
+                            </div>
+                        </li>
+                            <li>
+                            <!--缩略图-->
+                            <div class="thumbnail-group"><a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a></div>
+                            <div class="news-group">
+                                <p class="title"><a href="#">王健林卖掉进军海外首个项目:17亿售伦敦ONE六成股权</a></p>
+                                <p class="desc">外界关于万达要出售此前在海外投资项目的消息一直不断。</p>
+                                <p class="more">
+                                    <span class="category">深度报道</span>
+                                    <span class="pub-time">1小时前</span>
+                                    <span class="author">知了课堂</span>
+                                </p>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ul>
+
+                    <!--加载更多按钮-->
+                    <div class="load-more-group">
+                        <button class="load-more">加载更多</button>
+                    </div>
+
+
+
+
+                </div>
+
+            </div>
+
+            <div class="sidebar-wrapper">
+                <!--广告位-->
+                <div class="title-group">
+                    <span class="title">在线课堂</span>
+                    <a href="#">更多</a>
+                </div>
+                <!--广告图片-->
+                <div class="advertise-group">
+                    <a href="#">
+                        <img src="http://www.xfz.cn/static/build/images/side-gift-banner.png" alt="">
+</a>
+                </div>
+
+                <!--关注我-->
+                <div class="platform-group">
+                    <div class="title-group">
+                        <span class="title">关注我</span>
+                    </div>
+
+                    <div class="focus-group">
+
+                        <ul class="left-group">
+                            <li class="zhihu">
+                               <a href="#" target="_blank">小饭桌创业课堂</a>
+                           </li>
+                            <li class="weibo">
+                               <a href="#" target="_blank">小饭桌创业课堂</a>
+                           </li>
+                            <li class="toutiao">
+                               <a href="#" target="_blank">知了课堂</a>
+                           </li>
+                        </ul>
+
+                        <div class="right-group">
+                            <p class="desc">扫码关注小饭桌微信公众平台xfz008</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!--热门文章-->
+                <div class="hot-news-group">
+                    <div class="title-group">
+                        <span class="title">热门推荐</span>
+                    </div>
+
+                    <ul class="hot-list-group">
+                        <li>
+                            <div class="left-group">
+                                <p class="titl"><a href="#">王健林卖掉进军海外首个项目:17亿售伦敦ON...</a></p>
+                                <p class="more">
+                                    <span class="category">深度报道</span>
+                                    <span class="pub-time">1小时前</span>
+                                </p>
+                            </div>
+                            <div class="right-group">
+                                <a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="left-group">
+                                <p class="titl"><a href="#">王健林卖掉进军海外首个项目:17亿售伦敦ON...</a></p>
+                                <p class="more">
+                                    <span class="category">深度报道</span>
+                                    <span class="pub-time">1小时前</span>
+                                </p>
+                            </div>
+                            <div class="right-group">
+                                <a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

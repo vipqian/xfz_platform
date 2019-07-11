@@ -1,0 +1,67 @@
+{% extends 'cms/news/../base.html' %}
+
+{% block title %}
+添加轮播图|CMS后台管理系统
+{% endblock %}
+{% block content-header %}
+<h1>添加轮播图</h1>
+{% endblock %}
+
+{% block js %}
+    <script src="https://unpkg.com/qiniu-js@2.4.0/dist/qiniu.min.js"></script>
+    <script src="{% static 'js/write_banner.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <form action="" role="form" method="get">
+                    <div class="box-body">
+                        <div class="from-group" style="text-align: center">
+                            <img src="" alt="" style="margin: 10px 0; width: 798px; height: 202px;" id="banner-group">
+                        </div>
+                        <div class="form-group">
+                            <label for="thumbnail-form">轮播图</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="thumbnail-form" placeholder="" name="image-url" readonly>
+                                <span class="input-group-btn">
+                                    <label class="btn-default btn btn-file">
+                                        上传图片<input type="file" class="btn btn-default" id="thumbnail-btn">
+
+                                    </label>
+                                </span>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">权重</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入权重" name="priority">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">跳转地址</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="请输入跳转地址" name="link-to">
+                        </div>
+
+
+                        <div class="form-group" id="progress-group" style="display: none;">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 0">
+                                0%
+                                </div>
+</div>
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="box-footer">
+                        <button id="sub-btn" class="btn btn-primary pull-right">发布新闻</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

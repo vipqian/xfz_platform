@@ -1,0 +1,45 @@
+{% extends 'cms/base.html' %}
+
+{% block title %}
+讲师列表|CMS后台管理系统
+{% endblock %}
+
+{% block content-header %}
+讲师列表
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <a href="{% url 'cms:add_teacher_page' %}"><button class="btn btn-primary pull-right">添加讲师</button></a>
+
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>姓名</th>
+                        <th>职务</th>
+                        <th>操作</th>
+
+                        </thead>
+                        <tbody>
+                        {% for teacher in teachers %}
+                            <tr>
+                            <td>{{ teacher.name }}</td>
+                            <td>{{ teacher.jobtitle }}</td>
+                            <td>
+                                <a href="{% url 'cms:editor_teacher_page' %}?teacher_id={{ teacher.id }}"><button class="btn btn-warning btn-xs">编辑</button></a>
+                                <a href="{% url 'cms:delete_teacher' %}?teacher_id={{ teacher.id }}"><button class="btn btn-danger btn-xs">删除</button></a>
+                            </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

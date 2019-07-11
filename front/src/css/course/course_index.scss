@@ -1,0 +1,86 @@
+@import "../../common/init";
+@import "../../common/constant";
+@import "../../common/header";
+@import "../../common/footer";
+@import "../../common/body";
+@import "../../common/course_nav.scss";
+
+
+
+
+.main{
+
+  .wrapper{
+
+    .course-list{
+      overflow: hidden;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      li{
+        float: left;
+        $courseItemHeight: 280px;
+        $thumbnailHeight: 158px;
+        width: 278px;
+        height: $courseItemHeight;
+        background: #ffffff;
+        margin-top: 20px;
+
+
+        &:hover{
+          box-shadow: 0 4px 5px rgba(0,0,0,0.1);
+        }
+
+
+        .thumbnail-group{
+          img{
+            width: 100%;
+            height: $thumbnailHeight;
+          }
+        }
+
+        .course-info{
+          padding: 15px;
+          width: 100%;
+          box-sizing: border-box;
+          position: relative;
+
+          .title{
+            color: $mainFontColor ;
+          }
+
+          .author{
+            margin-top: 10px;
+            color: $assistFontColor;
+            font-size: 14px;
+          }
+
+          .price-group{
+            position: absolute;
+            right: 16px;
+            bottom: 0px;
+            text-align: right;
+
+
+            .pay{
+              color: $buyColor;
+            }
+
+            .free{
+              color: $freeColor;
+            }
+          }
+        }
+
+
+
+
+      }
+
+    }
+
+
+  }
+}

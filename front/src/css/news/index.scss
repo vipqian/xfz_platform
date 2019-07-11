@@ -1,0 +1,157 @@
+@import "../../common/init";
+@import "../../common/constant";
+@import "../../common/header";
+@import "../../common/sidebar-wrapper";
+@import "../../common/body";
+@import "../../common/footer";
+@import "../../common/news_list";
+
+
+.main{
+
+  .wrapper{
+    .main-content-wrapper{
+      //轮播图
+      .banner-group{
+        width: $bannerWidth;
+        height: $bannerHeight;
+        background: blueviolet;
+        position: relative;
+        overflow: hidden;
+
+        //轮播图的盒子
+        .banner-ul{
+          height: $bannerHeight;
+          overflow: hidden;
+          float: left;
+          position: absolute;
+          left: 0;
+
+
+
+          
+          li{
+            float: left;
+            width: $mainBoxWidth;
+            height: $bannerHeight;
+
+            img{
+              width: $mainBoxWidth;
+              height: $bannerHeight;
+            }
+          }
+        }
+
+        //箭头
+        .arrow{
+          font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+          font-size: 70px;
+          color: #ffffff;
+          position: absolute;
+          top: 50%;
+          margin-top: -45px;
+          cursor: pointer;
+          display: none;
+
+        }
+
+        .left-arrow{
+          left: 20px;
+        }
+
+        .right-arrow{
+          right: 20px;
+        }
+
+
+        //小圆点的样式
+        .page-control-group{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin-bottom: 10px;
+
+
+          .page-control{
+            margin: 0 auto;
+            overflow: hidden;
+
+            li{
+              float: left;
+              width: 10px;
+              height: 10px;
+              border: 1px solid white;
+              border-radius: 50%;
+              margin: 0 8px;
+              cursor: pointer;
+              box-sizing: border-box;
+
+              &.active{
+              background: #ffffff;
+              }
+            }
+
+          }
+        }
+
+
+
+
+      }
+  }
+}
+
+}
+
+
+.main{
+  .wrapper{
+    .main-content-wrapper{
+      //新闻列表table
+      .list-outer-group{
+        background: #ffffff;
+        margin-top: 10px;
+
+
+        .list-tab{
+          width: 100%;
+          height: 66px;
+          overflow: hidden;
+          border: 1px solid $lineColor;
+          border-left: none;
+          border-right: none;
+
+          li{
+            float: left;
+            padding: 0 15px;
+            margin-top: 20px;
+
+            a {
+              color: $assistFontColor;
+              }
+
+            &:first-of-type {
+                border-left: 5px solid #5c87d9;
+              }
+
+            &.active{
+              a{
+                color: $mainFontColor;
+              }
+            }
+            }
+
+          }
+        }
+
+      //新闻列表
+      @include news_list();
+      //加载更多按钮
+
+
+
+      }
+    }
+  }
+

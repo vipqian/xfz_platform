@@ -1,0 +1,324 @@
+@import "../../common/init";
+@import "../../common/constant";
+
+body{
+  background: #f2f2f2;
+}
+.header{
+  width: 100%;
+  height: $navHeight;
+  background: #3a3a3a;
+
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 1;
+
+
+  .container{
+    width: $pageWidth;
+    height: $navHeight;
+    margin: 0 auto;
+    overflow: hidden;
+
+    .log-box{
+      height: $navHeight;
+      width: 140px;
+      background: url("https://www.xfz.cn/static/build/images/logo.png") no-repeat;
+      margin-top: 6px;
+      float: left;
+
+      a{
+        display: block;
+        width: 140px;
+        height: $navHeight;
+      }
+    }
+
+    .nav{
+
+
+      float: left;
+      margin-left: 60px;
+      
+      li{
+        float: left;
+        margin-left: 50px;
+        height: $navHeight;
+        line-height: $navHeight;
+        box-sizing: border-box;
+        a{
+          color: #ffffff;
+        }
+
+        &.active{
+        border-bottom: 5px solid yellowgreen;
+      }
+      }
+
+    }
+
+    .auth-box{
+      float: right;
+      color: #ffffff;
+      line-height: $navHeight;
+      height: $navHeight;
+
+      .iconfont{
+        float: left;
+        color: #ffffff;
+        font-size: 22px;
+        margin-top: 1px;
+        margin-right: 5px;
+
+
+
+      }
+      a{
+        color: #ffffff;
+
+      }
+    }
+  }
+}
+
+.main{
+  width: 100%;
+  margin-top: 10px+$navHeight;
+
+  .wrapper{
+    width: $pageWidth;
+    margin: 0 auto;
+    overflow: hidden;
+
+
+    .news-wrapper{
+      float: left;
+      width: $mainBoxWidth;
+
+
+      .banner-group{
+        width: $bannerWidth;
+        height: $bannerHeight;
+        overflow: hidden;
+        position: relative;
+
+        .banner-ul{
+          width: $bannerWidth*4;
+          height: $bannerHeight;
+          overflow: hidden;
+          position: absolute;
+          left: 0;
+
+
+          li{
+            width: $bannerWidth;
+            height: $bannerHeight;
+            float: left;
+
+          }
+
+          img{
+            width: $bannerWidth;
+            height: $bannerHeight;
+          }
+        }
+
+
+        .arrow{
+          font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
+          font-size: 75px;
+          color: #ffffff;
+          position: absolute;
+          top: 50%;
+          margin-top: -45px;
+          display: none;
+          cursor: pointer;
+        }
+
+        .left-arrow{
+          left: 20px;
+        }
+
+        .right-arrow{
+          right: 20px;
+        }
+
+
+        //小圆点的样式
+        .page-control-group{
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          margin-bottom: 10px;
+
+
+          .page-control{
+            margin: 0 auto;
+            overflow: hidden;
+            width: 104px;
+
+            li{
+              float: left;
+              width: 10px;
+              height: 10px;
+              border: 1px solid white;
+              border-radius: 50%;
+              margin: 0 8px;
+              cursor: pointer;
+              box-sizing: border-box;
+
+              &.active{
+              background: #ffffff;
+              }
+            }
+
+          }
+        }
+
+      }
+
+    }
+  }
+}
+
+
+.main{
+  .wrapper{
+    .news-wrapper{
+      .list-outer-group{
+        background: #ffffff;
+        margin-top: 10px;
+
+        .list-tab{
+          overflow: hidden;
+          border: 1px solid #eeeeee;
+          height: 66px;
+          border-left: none;
+          border-right: none;
+
+          li{
+            float: left;
+            margin-top: 20px;
+            padding: 0 16px;
+            
+            
+            a{
+              color: #878787;
+            }
+
+            &:first-of-type{
+            border-left: 5px solid $themeColor;
+            }
+            
+            &.active{
+              a{
+                color: #000;
+              }
+            }
+          }
+        }
+
+        .list-inner-group{
+          width: 100%;
+
+          li{
+            width: 100%;
+            height: 160px;
+            padding: 20px;
+            overflow: hidden;
+            border-bottom: 1px solid #eeeeee;
+
+
+            .thumbnail-group{
+              float: left;
+              width: 226px;
+              height: 162px;
+
+              image{
+                width: 226px;
+                height: 162px;
+              }
+            }
+            .news-group{
+              float: right;
+              margin-right: 30px;
+              width: 504px;
+              height: 162px;
+              position: relative;
+
+              .title{
+                font-size: 22px;
+                a{
+                  color: #212121;
+
+                  &:hover{
+                  color: $themeColor;
+                }
+                }
+              }
+
+              .desc{
+                color: #878787;
+                font-size: 14px;
+                margin-top: 10px;
+              }
+
+              .more{
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                overflow: hidden;
+
+                .category{
+                  float: left;
+                  color: $themeColor;
+                  font-size: 14px;
+                }
+
+                .pub-time{
+                  float: right;
+                  color: #878787;
+
+                }
+
+                .author{
+                  float: right;
+                  margin-right: 20px;
+                  color: #878787;
+                }
+              }
+            }
+          }
+
+
+
+        }
+
+        .load-more-group{
+          text-align: center;
+
+          .load-more{
+            margin: 20px 0;
+            width: 402px;
+            height: 40px;
+            border: none;
+            color:  #6d85ac;
+            background: #d2dcea;
+            outline: none;
+            cursor: pointer;
+          }
+
+        }
+
+
+
+      }
+    }
+  }
+}
+
+
