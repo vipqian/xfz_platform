@@ -7,6 +7,8 @@ function Author() {
     this.sendBtn = $('.sms-captcha-btn');
 
 
+
+
     
 }
 
