@@ -1,7 +1,7 @@
 
 
 
-*.pyc
+*.py[cod]
 *.so
 *.log
 *.egg
@@ -9,5 +9,3 @@
 .idea/*
 dist
 build
-
-test/
