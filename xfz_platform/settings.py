@@ -134,8 +134,8 @@ DATABASES = {
         'NAME': 'xfz_platform',
         'HOST': '127.0.0.1',
         # 'HOST': '129.28.158.195',
-        # 'PORT': 3306,
-        'PORT': 3309,
+        'PORT': 3306,
+        #'PORT': 3309,
         'USER': 'root',
         'PASSWORD': '123456'
     }
