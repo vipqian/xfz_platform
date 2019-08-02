@@ -24,7 +24,7 @@ SECRET_KEY = '7frz$)_$4ano=8h66bl*9irkz*)xvdax)!o2jv8bzf%b5wneti'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '129.28.158.195', '123.125.114.144', 'www.qianvipfei.club']
+ALLOWED_HOSTS = ['127.0.0.1', 'www.qianvipfei.club']
 
 INTERNAL_IPS = ['127.0.0.1']
 
@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'apps.payinfo.apps.PayinfoConfig' ,
     'apps.ueditor.apps.UeditorConfig',
     # 'apps.search.apps.SearchConfig',
+    'apps.testApi'
 ]
 
 
@@ -135,7 +136,7 @@ DATABASES = {
         'HOST': '127.0.0.1',
         # 'HOST': '129.28.158.195',
         # 'PORT': 3306,
-        'PORT': 3309,
+        'PORT': 3306,
         'USER': 'root',
         'PASSWORD': '123456'
     }

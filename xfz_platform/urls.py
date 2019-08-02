@@ -31,7 +31,8 @@ urlpatterns = [
     path('payinfo/', include(('apps.payinfo.urls', 'apps.payinfo'), namespace='payinfo')),
     path('ueditor/', include(('apps.ueditor.urls', 'apps.ueditor'), namespace='ueditor')),
     # path('search/', include(('apps.search.urls', 'apps.search'), namespace='search')),
-    path('search/', include('haystack.urls'))
+    path('search/', include('haystack.urls')),
+    path('api/', include(('apps.testApi.urls', 'apps.testApi'), namespace='api'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
