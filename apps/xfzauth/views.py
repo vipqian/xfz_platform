@@ -136,5 +136,14 @@ def register(request):
 
 
 
+@require_POST
+def test(request):
+    forms = RegisterForm(request.GET)
+    if forms.is_valid():
+        pass
+    else:
+        return restful.param_error(message=forms.get_errors())
+
+
 
 
