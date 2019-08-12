@@ -4,7 +4,8 @@ function EditorNews() {
 
 EditorNews.prototype.run = function () {
     this.listenSumbitEvent();
-    this.listenQnUploadFileEvent()
+    // this.listenQnUploadFileEvent();
+    this.listenUploadFileEvent();
 };
 
 
@@ -87,6 +88,30 @@ EditorNews.prototype.complateUploadEvent = function (response) {
     thumbnailFrom.val(imgUrl);
 };
 
+// 上传文件到自己的服务器
+EditorNews.prototype.listenUploadFileEvent = function () {
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = uploadBtn[0].files[0];
+        var fromData = new FormData();
+        fromData.append('file', file);
+        xfzajax.post({
+            'url': '/cms/upload_file/',
+            'data': fromData,
+            'processData': false,
+            'contentType': false,
+            'success': function (result) {
+                if (result['code'] === 200) {
+                    url = result['data']['url'];
+                   var thumbnailFrom = $('#thumbnail-form');
+                   thumbnailFrom.val(url)
+                }
+
+            }
+        })
+
+    })
+};
 
 EditorNews.prototype.listenSumbitEvent = function () {
     var subBtn = $('#sub-btn');
@@ -115,7 +140,7 @@ EditorNews.prototype.listenSumbitEvent = function () {
                 if (result['code'] === 200) {
                     window.messageBox.show('编辑成功');
 
-                    setTimeout(function(){window.location.href="http://129.28.158.195:8000/cms/newsList/";},3000)
+                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/cms/newsList/";},3000)
                 }
             }
         })

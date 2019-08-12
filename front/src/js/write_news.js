@@ -9,11 +9,10 @@ $(function () {
 });
 
 News.prototype.run  = function () {
-    // this.listenUploadFileEvent();
     this.listenUploadFileEvent();
+    // this.listenUploadFileEvent();
     this.initUEditor();
     this.listenSumbitEvent();
-    
 };
 
 
@@ -160,7 +159,8 @@ News.prototype.listenSumbitEvent = function () {
                 if (result['code'] === 200) {
                     window.messageBox.show('发布成功');
 
-                    setTimeout(function(){window.location.href="http://129.28.158.195:8000/cms/newsList/";},3000)
+                    // setTimeout(function(){window.location.href="http://129.28.158.195:8000/cms/newsList/";},3000)
+                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/cms/newsList/";},3000)
                 }
             }
         })

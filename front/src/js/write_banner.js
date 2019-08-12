@@ -147,7 +147,7 @@ Banner.prototype.listenSubBtn = function(){
                     window.messageBox.show('发布成功');
                     setTimeout(function () {
                         // window.location.href="http://129.28.158.195:8000/cms/banners/";
-                        window.location.href="http://127.0.0.0:8000/cms/banners/";
+                        window.location.href="http://127.0.0.1:8000/cms/banners/";
                     }, 2000)
                 } else {
                     window.messageBox.show(result['message']);
