@@ -132,7 +132,8 @@ class AddCourseForm(FormMixin, forms.ModelForm):
 
     class Meta:
         model = Course
-        fields = "__all__"
+        exclude = ['price']
+
 
         error_messages = {
             'title': {

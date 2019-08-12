@@ -4,6 +4,30 @@ function AddTeacher() {
 }
 
 
+AddTeacher.prototype.listenUploadFileEvent = function () {
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = uploadBtn[0].files[0];
+        var fromData = new FormData();
+        fromData.append('file', file);
+        xfzajax.post({
+            'url': '/cms/upload_file/',
+            'data': fromData,
+            'processData': false,
+            'contentType': false,
+            'success': function (result) {
+                if (result['code'] === 200) {
+                    url = result['data']['url'];
+                   var thumbnailFrom = $('#thumbnail-form');
+                   thumbnailFrom.val(url)
+                }
+
+            }
+        })
+
+    })
+};
+
 AddTeacher.prototype.initUEditor = function () {
     window.ue = UE.getEditor('editor',{
         // 编辑器高度
@@ -137,7 +161,8 @@ AddTeacher.prototype.listenSumbitEvent = function () {
 
 AddTeacher.prototype.run = function () {
     this.initUEditor();
-    this.listenQnUploadFileEvent();
+    // this.listenQnUploadFileEvent();
+    this.listenUploadFileEvent();
     this.listenSumbitEvent();
 };
 

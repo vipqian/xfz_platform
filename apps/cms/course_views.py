@@ -185,6 +185,7 @@ def add_course(request):
     """
     form = AddCourseForm(request.POST)
     if form.is_valid():
+        print("验证通过")
         form.save()
         return restful.ok()
     else:

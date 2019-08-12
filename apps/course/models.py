@@ -26,7 +26,7 @@ class Course(models.Model):
     video_url = models.URLField()
     # 封面图
     cover_url = models.URLField()
-    price = models.FloatField()
+    price = models.FloatField(default=0)
     # 时长
     duration = models.IntegerField()
     # 简介

@@ -103,6 +103,7 @@ AddCourse.prototype.listenSumbitEvent = function () {
         var price = $("input[name='price']").val();
         var duration = $("input[name='duration']").val();
         var profile = window.ue.getContent();
+        console.log(price);
 
 
         xfzajax.post({
@@ -121,7 +122,7 @@ AddCourse.prototype.listenSumbitEvent = function () {
                 console.log(result);
                 if (result['code'] === 200) {
                     window.messageBox.show('发布成功');
-                    setTimeout(function(){window.location.href="http://129.28.158.195:8000/cms/course_list/";},3000)
+                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/cms/course_list/";},3000)
                 }else {
                     var messageObject = result['message'];
                     //判断是不是字符串
@@ -140,11 +141,35 @@ AddCourse.prototype.listenSumbitEvent = function () {
     });
 };
 
+AddCourse.prototype.listenUploadFileEvent = function () {
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = uploadBtn[0].files[0];
+        var fromData = new FormData();
+        fromData.append('file', file);
+        xfzajax.post({
+            'url': '/cms/upload_file/',
+            'data': fromData,
+            'processData': false,
+            'contentType': false,
+            'success': function (result) {
+                if (result['code'] === 200) {
+                    url = result['data']['url'];
+                   var thumbnailFrom = $('#thumbnail-form');
+                   thumbnailFrom.val(url)
+                }
+
+            }
+        })
+
+    })
+};
 
 
 AddCourse.prototype.run = function () {
     this.initUEditor();
-    this.listenQnUploadFileEvent();
+    // this.listenQnUploadFileEvent();
+    this.listenUploadFileEvent();
     this.listenSumbitEvent();
 };
 
