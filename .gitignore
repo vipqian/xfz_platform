@@ -1,11 +1,8 @@
-
-
-
-*.py[cod]
+*.pyc
 *.so
 *.log
 *.egg
 *.egg-info
-.idea/*
+.idea/
 dist
 build
