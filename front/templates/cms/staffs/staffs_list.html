@@ -1,0 +1,73 @@
+{% extends 'cms/base.html' %}
+
+
+{% block title %}
+员工管理|CMS后台管理系统
+{% endblock %}
+
+
+{% block content-header %}
+员工列表
+{% endblock %}
+
+
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    {% if user.is_superuser %}
+                        <a href="{% url 'cms:add_banner' %}"><button class="btn btn-primary pull-right">添加员工</button></a>
+                    {% endif %}
+
+
+                </div>
+                <div class="box-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <th>姓名</th>
+                        <th>电话号</th>
+                        <th>部门</th>
+                        <th>操作</th>
+
+                        </thead>
+                        <tbody>
+                        {% for staff in staffs %}
+                            <tr>
+                            <td>{{ staff.username }}</td>
+
+                            <td>{{ staff.telephone }}</td>
+                            <td>
+                                {% if staff.is_superuser %}
+                                    超级用户
+                                {% else %}
+                                    {% for group in staff.group.all %}
+                                        {{ group.name }}/
+                                    {% endfor %}
+
+                                {% endif %}
+                            </td>
+
+                            <td>
+                            {% if user.is_superuser %}
+                                 <a href="{% url 'cms:editor_banner' %}?banner_id={{ staff.uid }}"><button class="btn btn-warning btn-xs">编辑</button></a>
+                                {% if not staff.is_superuser %}
+                                    <a href="{% url 'cms:delete_banner' %}?banner_id={{ banner.id }}"><button class="btn btn-danger btn-xs">删除</button></a>
+                                {% endif %}
+
+                            {% endif %}
+
+
+                            </td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

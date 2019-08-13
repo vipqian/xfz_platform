@@ -7,7 +7,7 @@
 """
 
 from django.urls import path
-from . import views, course_views
+from . import views, course_views, staff_views
 
 app_name = 'cms'
 
@@ -74,4 +74,7 @@ urlpatterns += [
     path('editor_course/', course_views.editor_course, name='editor_course'),
     path('delete_course/', course_views.delete_course, name='delete_course'),
 
+]
+urlpatterns += [
+    path('staff_list/', staff_views.index, name='staff_list'),
 ]

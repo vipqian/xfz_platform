@@ -139,6 +139,19 @@
             <li class="active"><a href="{% url 'cms:teacher_list' %}"><i class="fa fa-tag"></i> 讲师列表 </a></li>
           </ul>
         </li>
+          <li class="treeview">
+          <a href="#">
+            <i class="fa fa-tv"></i> <span>员工管理</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="active"><a href="{% url 'cms:staff_list' %}"><i class="fa fa-group"></i>员工列表</a></li>
+            <li class="active"><a href="{% url 'cms:course_category_list' %}"><i class="fa fa-tag"></i> 分类列表 </a></li>
+            <li class="active"><a href="{% url 'cms:teacher_list' %}"><i class="fa fa-tag"></i> 讲师列表 </a></li>
+          </ul>
+        </li>
 
       </ul>
     </section>
