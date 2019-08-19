@@ -77,4 +77,7 @@ urlpatterns += [
 ]
 urlpatterns += [
     path('staff_list/', staff_views.index, name='staff_list'),
+    path('add_staff_page/', staff_views.add_staff_page, name='add_staff_page'),
+    path('add_staff/', staff_views.add_staff, name='add_staff'),
+
 ]
