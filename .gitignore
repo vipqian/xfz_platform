@@ -10,3 +10,5 @@ __pycache__/
 *.pyc
 
 .idea/*
+
+apps/news/__pycache__/search_indexes.cpython-37.pyc
