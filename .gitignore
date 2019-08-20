@@ -4,3 +4,9 @@ front/src
 
 whoosh_index/
 
+__pycache__/
+
+
+*.pyc
+
+.idea/*
