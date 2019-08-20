@@ -42,11 +42,3 @@ def time_format(value):
         return value
 
     return localtime(value).strftime("%Y/%m/%d %H:%M:%S")
-
-
-@register.filter
-def time_format(value):
-    if isinstance(value, datetime):
-        return value
-    # 将时间转化为本地时间
-    return localtime(value).strftime("%Y/%m/%d %H:%M:%S")

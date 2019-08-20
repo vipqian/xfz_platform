@@ -4,7 +4,7 @@
 确认订单
 {% endblock %}
 
-{% block css %}
+{% block head %}
     <link rel="stylesheet" href="{% static 'css/common/header.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/common/footer.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/common/body.min.css' %}">
@@ -79,9 +79,6 @@
             background-position: -139px -302px;
         }
     </style>
-{% endblock %}
-
-{% block js %}
     <script>
         $(function () {
             var submitBtn = $("#submit-btn");
@@ -132,12 +129,12 @@
                 <tr>
                     <td align="left">
                         <a href="#">
-                            <img class="thumbnail" src="{{ course.cover_url }}" alt="">
-                            <span class="title">{{ course.title }}</span>
+                            <img class="thumbnail" src="{{ goods.thumbnail }}" alt="">
+                            <span class="title">{{ goods.title }}</span>
                         </a>
                     </td>
-                    <td>{{ course.price }}</td>
-                    <td>{{ course.price }}</td>
+                    <td>{{ goods.price }}</td>
+                    <td>{{ goods.price }}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,46 +1,61 @@
 
-function CmsNewsList() {
+function CMSNewsList() {
 
 }
 
-
-CmsNewsList.prototype.run = function () {
-    this.initDatePicker()
-};
-
-
-CmsNewsList.prototype.initDatePicker = function(){
-    var startPicker = $('#start-picker');
-    var endPicker = $('#end-picker');
+CMSNewsList.prototype.initDatePicker = function () {
+    var startPicker = $("#start-picker");
+    var endPicker = $("#end-picker");
 
     var todayDate = new Date();
     var todayStr = todayDate.getFullYear() + '/' + (todayDate.getMonth()+1) + '/' + todayDate.getDate();
     var options = {
-        // 显示底部按钮
         'showButtonPanel': true,
-        // 选择后的时间格式
         'format': 'yyyy/mm/dd',
-        // 开始时间
-        'startDate': '2018/6/18',
-        // 结束时间
+        'startDate': '2017/6/1',
         'endDate': todayStr,
-        // 语言
         'language': 'zh-CN',
-        // 是否显示今天按钮
         'todayBtn': 'linked',
-        // 今天高亮
         'todayHighlight': true,
-        // 清除按钮
         'clearBtn': true,
-        // 自动关闭
         'autoclose': true
     };
-
     startPicker.datepicker(options);
     endPicker.datepicker(options);
 };
 
+CMSNewsList.prototype.listenDeleteEvent = function () {
+    var deleteBtns = $(".delete-btn");
+    deleteBtns.click(function () {
+        var btn = $(this);
+        var news_id = btn.attr('data-news-id');
+        xfzalert.alertConfirm({
+            'text': '您是否要删除这篇新闻吗？',
+            'confirmCallback': function () {
+                xfzajax.post({
+                    'url': '/cms/delete_news/',
+                    'data': {
+                        'news_id': news_id
+                    },
+                    'success': function (result) {
+                        if(result['code'] === 200){
+                            window.location = window.location.href;
+                            // window.location.reload()
+                        }
+                    }
+                });
+            }
+        });
+    });
+};
+
+
+CMSNewsList.prototype.run = function () {
+    this.initDatePicker();
+    this.listenDeleteEvent();
+};
+
 $(function () {
-   var cmsNewsList = new CmsNewsList();
-   cmsNewsList.run();
+    var newsList = new CMSNewsList();
+    newsList.run();
 });

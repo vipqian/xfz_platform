@@ -1,8 +1,6 @@
-*.pyc
-*.so
-*.log
-*.egg
-*.egg-info
-.idea/
-dist
-build
+front/node_modules
+
+front/src
+
+whoosh_index/
+

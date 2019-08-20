@@ -1,46 +1,38 @@
 {% extends 'base/front_base.html' %}
 {% load news_filters %}
 
-
 {% block title %}
-    {{ news.title|truncatechars:15 }}
+    新闻详情页
 {% endblock %}
 
-{% block css %}
-    <link rel="stylesheet" href="{% static 'css/news/new_detail.min.css' %}">
-{% endblock %}
-
-{% block js %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/news/news_detail.min.css' %}">
     <script src="{% static 'arttemplate/template-web.js' %}"></script>
-    <script src="{% static "js/news_detail.min.js" %}"></script>
-    <script id="comment-item" type="text/html">
-        {% verbatim %}
-        <li>
-            <div class="comment-info">
-                <img src="http://ps9lpfh8q.bkt.clouddn.com/1559784622162.jpg" alt="" class="avatar">
-                <span class="author">{{ comment.author.username }}</span>
-                <span class="pub-time">{{ comment.pub_time|timeSince}}</span>
-            </div>
-            <p class="comment-content">{{ comment.content }}</p>
-        </li>
+    <script src="{% static 'js/news_detail.min.js' %}"></script>
+<script id="comment-item" type="text/html">
+{% verbatim %}
+<li>
+    <div class="comment-info">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528129845916&di=536993042d5223862f8c4ab157ba6e72&imgtype=0&src=http%3A%2F%2Fpic1.ipadown.com%2Fimgs%2F201206120933354195.jpg" alt="" class="avatar">
+        <span class="author">{{ comment.author.username }}</span>
+        <span class="pub-time">{{ comment.pub_time|timeSince }}</span>
+    </div>
+    <p class="comment-content">{{ comment.content }}</p>
+</li>
 {% endverbatim %}
 </script>
-
 {% endblock %}
 
-
-
 {% block main %}
-<div class="main">
+    <div class="main">
         <div class="wrapper">
-
             <div class="main-content-wrapper">
                 <div class="news-wrapper">
                     <h1 class="title">{{ news.title }}</h1>
                     <div class="news-info">
                         <div class="info-group">
-                            <span class="author">{{ news.author }}</span>
-                            <span class="pub-time">{{ news.put_time|time_since }}</span>
+                            <span class="author">{{ news.author.username }}</span>
+                            <span class="pub-time">{{ news.pub_time|time_since }}</span>
                             <span class="category">{{ news.category.name }}</span>
                         </div>
                         <div class="share-group">
@@ -49,122 +41,31 @@
                             <a href="#" class="weibo share-item"></a>
                         </div>
                     </div>
-
-                    <article class="article">{{ news.content|safe }}</article>
+                    <article class="article">
+                        {{ news.content|safe }}
+                    </article>
                 </div>
                 <div class="comment-wrapper">
-                    <h3 class="title" id="comment-title">文章评论（{{ count }}）</h3>
-                    {% if user.is_authenticated %}
-                        <textarea name="comment" class="comment-textarea logined-textarea" placeholder="参与评论~" data-news-id="{{ news.id }}"></textarea>
-
-                    {% else %}
-                        <textarea name="comment" class="comment-textarea nologin-textarea" placeholder="请登录，参与评论~" readonly></textarea>
-                    {% endif %}
+                    <h3 class="title">文章评论（0）</h3>
+                    <textarea name="comment" class="comment-textarea logined-textarea" placeholder="立即登录，参与评论~"></textarea>
                     <div class="submit-btn-group">
-
-                        <button  class="submit-btn">立即评论</button>
+                        <button class="submit-btn" data-news-id="{{ news.pk }}">立即评论</button>
                     </div>
-
-
-
                     <ul class="comment-list">
-                        {% for comment in comments %}
-                                 <li>
-                            <div class="comment-info">
-                                <img src="http://ps9lpfh8q.bkt.clouddn.com/1559784622162.jpg" alt="" class="avatar">
-                                <span class="author">{{ comment.author.username }}</span>
-                                <span class="pub-time">{{ comment.pub_time|time_since }}</span>
-                            </div>
-                            <p class="comment-content">{{ comment.content }}</p>
-                        </li>
+                        {% for comment in news.comments.all %}
+                            <li>
+                                <div class="comment-info">
+                                    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1528129845916&di=536993042d5223862f8c4ab157ba6e72&imgtype=0&src=http%3A%2F%2Fpic1.ipadown.com%2Fimgs%2F201206120933354195.jpg" alt="" class="avatar">
+                                    <span class="author">{{ comment.author.username }}</span>
+                                    <span class="pub-time">{{ comment.pub_time|time_since }}</span>
+                                </div>
+                                <p class="comment-content">{{ comment.content }}</p>
+                            </li>
                         {% endfor %}
                     </ul>
                 </div>
-
-
             </div>
-
-
-
-
-            <div class="sidebar-wrapper">
-                <!--广告位-->
-                <div class="title-group">
-                    <span class="title">在线课堂</span>
-                    <a href="#">更多</a>
-                </div>
-                <!--广告图片-->
-                <div class="advertise-group">
-                    <a href="#">
-                        <img src="http://www.xfz.cn/static/build/images/side-gift-banner.png" alt="">
-</a>
-                </div>
-
-                <!--关注我-->
-                <div class="platform-group">
-                    <div class="title-group">
-                        <span class="title">关注我</span>
-                    </div>
-
-                    <div class="focus-group">
-
-                        <ul class="left-group">
-                            <li class="zhihu">
-                               <a href="#" target="_blank">小饭桌创业课堂</a>
-                           </li>
-                            <li class="weibo">
-                               <a href="#" target="_blank">小饭桌创业课堂</a>
-                           </li>
-                            <li class="toutiao">
-                               <a href="#" target="_blank">知了课堂</a>
-                           </li>
-                        </ul>
-
-                        <div class="right-group">
-                            <p class="desc">扫码关注小饭桌微信公众平台xfz008</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!--热门文章-->
-                <div class="hot-news-group">
-                    <div class="title-group">
-                        <span class="title">热门推荐</span>
-                    </div>
-
-                    <ul class="hot-list-group">
-                        <li>
-                            <div class="left-group">
-                                <p class="titl"><a href="#">王健林卖掉进军海外首个项目:17亿售伦敦ON...</a></p>
-                                <p class="more">
-                                    <span class="category">深度报道</span>
-                                    <span class="pub-time">1小时前</span>
-                                </p>
-                            </div>
-                            <div class="right-group">
-                                <a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="left-group">
-                                <p class="titl"><a href="#">王健林卖掉进军海外首个项目:17亿售伦敦ON...</a></p>
-                                <p class="more">
-                                    <span class="category">深度报道</span>
-                                    <span class="pub-time">1小时前</span>
-                                </p>
-                            </div>
-                            <div class="right-group">
-                                <a href="#"><img src="http://static-image.xfz.cn/1516169692_914.jpg-website.news.list" alt=""></a>
-                            </div>
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-
+            {% include 'common/sidebar.html' %}
         </div>
     </div>
 {% endblock %}
-
-

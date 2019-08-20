@@ -15,7 +15,7 @@ var sourcemaps = require("gulp-sourcemaps");
 var path = {
     'html': './templates/**/',
     'css': './src/css/**/',
-    'js': './src/js/**/',
+    'js': './src/js/',
     'images': './src/images/',
     'css_dist': './dist/css/',
     'js_dist': './dist/js/',
@@ -27,10 +27,6 @@ gulp.task("html",function () {
     gulp.src(path.html + '*.html')
         .pipe(bs.stream())
 });
-
-
-
-
 
 // 定义一个css的任务
 gulp.task("css",function () {

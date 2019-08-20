@@ -1,170 +1,155 @@
 function News() {
-
+    this.progressGroup = $("#progress-group");
 }
-
-$(function () {
-   var news = new News();
-   news.run();
-   News.progressGroup = $('#progress-group');
-});
-
-News.prototype.run  = function () {
-    this.listenUploadFileEvent();
-    // this.listenUploadFileEvent();
-    this.initUEditor();
-    this.listenSumbitEvent();
-};
-
-
-// 上传文件到自己的服务器
-News.prototype.listenUploadFileEvent = function () {
-    var uploadBtn = $('#thumbnail-btn');
-    uploadBtn.change(function () {
-        var file = uploadBtn[0].files[0];
-        var fromData = new FormData();
-        fromData.append('file', file);
-        xfzajax.post({
-            'url': '/cms/upload_file/',
-            'data': fromData,
-            'processData': false,
-            'contentType': false,
-            'success': function (result) {
-                if (result['code'] === 200) {
-                    url = result['data']['url'];
-                   var thumbnailFrom = $('#thumbnail-form');
-                   thumbnailFrom.val(url)
-                }
-
-            }
-        })
-
-    })
-};
-
-// 上传文件到七牛云
-News.prototype.listenQnUploadFileEvent = function () {
-    var self = this;
-    var uploadBtn = $('#thumbnail-btn');
-    uploadBtn.change(function () {
-        var file = uploadBtn[0].files[0];
-        xfzajax.get({
-            'url': '/cms/qntoken',
-            'success': function (result) {
-                if (result['code'] === 200){
-                    var token = result['data']['token'];
-                    var key = (new Date().getTime()) + '.' + file.name.split('.')[1];
-                    var putExtra = {
-                        // 文件名
-                        fname: key,
-                        // 其他参数
-                        params: {},
-                        // 限制的文件类型
-                        mimeType: ['image/png','video/x-ms-wmv','image/jpeg']
-                    };
-                    var config = {
-                        // 是否加速
-                        useCdnDomain: true,
-                        // 失败后从新上传的次数
-                        retryCount: 6,
-                        // 七牛地区
-                        region: qiniu.region.z2
-                    };
-                    var observable = qiniu.upload(file, key, token, putExtra,config);
-                    observable.subscribe({
-                        // 上传文件过程中告诉你上传多少
-                        "next":self.updateUploadProgress,
-                        // 上传文件出现错误
-                        "error":self.uploadErrorEvent,
-                        // 文件上传成功的回调函数
-                        "complete": self.complateUploadEvent
-                 });
-
-                }
-            }
-        })
-    })
-};
-
-News.prototype.updateUploadProgress = function (response) {
-    // 上传过程中做的事情
-    var self = this;
-    var total = response.total;
-    var percent = total.percent;
-    var progressGroup = News.progressGroup;
-    progressGroup.show();
-    var progressBar = $('.progress-bar');
-    var progressText = percent.toFixed(0) + '%';
-    progressBar.css({'width': progressText});
-    progressBar.text(progressText);
-
-};
-
-News.prototype.uploadErrorEvent = function (error) {
-    var progressGroup = News.progressGroup;
-    progressGroup.hide();
-    if (error.message === 'file type doesn\'t match with what you specify'){
-        window.messageBox.show('上传的文件不匹配');
-    }
-
-};
-
-News.prototype.complateUploadEvent = function (response) {
-    var progressGroup = News.progressGroup;
-    progressGroup.hide();
-    var progressBar = $('.progress-bar');
-    progressBar.css({'width': 0});
-    progressBar.text('0%');
-
-    var imgUrl = 'http://ps9lpfh8q.bkt.clouddn.com/'+ response.key;
-    var thumbnailFrom = $('#thumbnail-form');
-    thumbnailFrom.val(imgUrl);
-};
 
 News.prototype.initUEditor = function () {
     window.ue = UE.getEditor('editor',{
-        // 编辑器高度
         'initialFrameHeight': 400,
-        // 使用图片上传
         'serverUrl': '/ueditor/upload/'
     });
 };
 
-
-
-
-// 发送新闻
-News.prototype.listenSumbitEvent = function () {
-    var subBtn = $('#sub-btn');
-    subBtn.click(function (event) {
-        event.preventDefault();
-        var title = $("input[name='title']").val();
-        var desc = $("input[name='desc']").val();
-        var thumbnail = $("input[name='thumbnail']").val();
-        var category = $("select[name='category']").val();
-        var author = $("input[name='author']").val();
-        var content = window.ue.getContent();
-
-
+News.prototype.listenUploadFielEvent = function () {
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = uploadBtn[0].files[0];
+        var formData = new FormData();
+        formData.append('file',file);
         xfzajax.post({
-            'url': '/cms/add_news/',
-            'data': {
-                'title': title,
-                'desc': desc,
-                'thumbnail':  thumbnail,
-                'category': category,
-                'content': content,
-                'author': author
-            },
+            'url': '/cms/upload_file/',
+            'data': formData,
+            'processData': false,
+            'contentType': false,
             'success': function (result) {
-                if (result['code'] === 200) {
-                    window.messageBox.show('发布成功');
-
-                    // setTimeout(function(){window.location.href="http://129.28.158.195:8000/cms/newsList/";},3000)
-                    setTimeout(function(){window.location.href="http://127.0.0.1:8000/cms/newsList/";},3000)
+                if(result['code'] === 200){
+                    var url = result['data']['url'];
+                    var thumbnailInput = $("#thumbnail-form");
+                    thumbnailInput.val(url);
                 }
             }
-        })
+        });
     });
 };
 
+News.prototype.listenQiniuUploadFileEvent = function () {
+    var self = this;
+    var uploadBtn = $('#thumbnail-btn');
+    uploadBtn.change(function () {
+        var file = this.files[0];
+        xfzajax.get({
+            'url': '/cms/qntoken/',
+            'success': function (result) {
+                if(result['code'] === 200){
+                    var token = result['data']['token'];
+                    // a.b.jpg = ['a','b','jpg']
+                    // 198888888 + . + jpg = 1988888.jpg
+                    var key = (new Date()).getTime() + '.' + file.name.split('.')[1];
+                    var putExtra = {
+                        fname: key,
+                        params:{},
+                        mimeType: ['image/png','image/jpeg','image/gif','video/x-ms-wmv']
+                    };
+                    var config = {
+                        useCdnDomain: true,
+                        retryCount: 6,
+                        region: qiniu.region.z0
+                    };
+                    var observable = qiniu.upload(file,key,token,putExtra,config);
+                    observable.subscribe({
+                        'next': self.handleFileUploadProgress,
+                        'error': self.handleFileUploadError,
+                        'complete': self.handleFileUploadComplete
+                    });
+                }
+            }
+        });
+    });
+};
 
+News.prototype.handleFileUploadProgress = function (response) {
+    var total = response.total;
+    var percent = total.percent;
+    var percentText = percent.toFixed(0)+'%';
+    // 24.0909，89.000....
+    var progressGroup = News.progressGroup;
+    progressGroup.show();
+    var progressBar = $(".progress-bar");
+    progressBar.css({"width":percentText});
+    progressBar.text(percentText);
+};
+
+News.prototype.handleFileUploadError = function (error) {
+    window.messageBox.showError(error.message);
+    var progressGroup = $("#progress-group");
+    progressGroup.hide();
+    console.log(error.message);
+};
+
+News.prototype.handleFileUploadComplete = function (response) {
+    console.log(response);
+    var progressGroup = $("#progress-group");
+    progressGroup.hide();
+
+    var domain = 'http://7xqenu.com1.z0.glb.clouddn.com/';
+    var filename = response.key;
+    var url = domain + filename;
+    var thumbnailInput = $("input[name='thumbnail']");
+    thumbnailInput.val(url);
+};
+
+News.prototype.listenSubmitEvent = function () {
+    var submitBtn = $("#submit-btn");
+    submitBtn.click(function (event) {
+        event.preventDefault();
+        var btn = $(this);
+        var pk = btn.attr('data-news-id');
+
+        var title = $("input[name='title']").val();
+        var category = $("select[name='category']").val();
+        var desc = $("input[name='desc']").val();
+        var thumbnail = $("input[name='thumbnail']").val();
+        var content = window.ue.getContent();
+
+        var url = '';
+        if(pk){
+            url = '/cms/edit_news/';
+        }else{
+            url = '/cms/write_news/';
+        }
+
+        xfzajax.post({
+            'url': url,
+            'data': {
+                'title': title,
+                'category': category,
+                'desc': desc,
+                'thumbnail': thumbnail,
+                'content': content,
+                'pk': pk
+            },
+            'success': function (result) {
+                if(result['code'] === 200){
+                    xfzalert.alertSuccess('恭喜！新闻发表成功！',function () {
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    });
+};
+
+News.prototype.run = function () {
+    var self = this;
+    self.initUEditor();
+    self.listenQiniuUploadFileEvent();
+    self.listenSubmitEvent();
+    // self.listenUploadFielEvent();
+};
+
+
+$(function () {
+    var news = new News();
+    news.run();
+
+   News.progressGroup = $('#progress-group');
+});

@@ -1,23 +1,8 @@
-# -*- coding: utf-8 -*-#
-
-"""
-Name:           forms.py
-# Author:       wangyunfei
-# Date:         2019-06-17
-# Description:  
-"""
+#encoding: utf-8
 
 from django import forms
+from apps.forms import FormMixin
 
-
-from common.forms import FormMixin
-
-
-class CommentForms(forms.Form, FormMixin):
-    """对评论提交的表单进行验证码"""
-    content = forms.CharField(max_length=200, error_messages={
-        'max_length': '输入超过200字符！',
-        'required': '请输入评论',
-    })
+class PublicCommentForm(forms.Form,FormMixin):
+    content = forms.CharField()
     news_id = forms.IntegerField()
-

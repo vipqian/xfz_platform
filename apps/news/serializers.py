@@ -1,49 +1,29 @@
-# -*- coding: utf-8 -*-#
-
-"""
-Name:           serializers 
-# Author:       wangyunfei
-# Date:         2019-06-13
-# Description:  
-"""
+#encoding: utf-8
 
 from rest_framework import serializers
-
-from .models import News, Category, Comment
-from apps.xfzauth.serializers import AuthorSerializer
-
-
+from .models import News,NewsCategory,Comment,Banner
+from apps.xfzauth.serializers import UserSerializer
 
 class NewsCategorySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Category
-        fields = ('id', 'name')
-
+        model = NewsCategory
+        fields = ('id','name')
 
 class NewsSerializer(serializers.ModelSerializer):
-    """序列化"""
     category = NewsCategorySerializer()
+    author = UserSerializer()
     class Meta:
         model = News
-        fields = ('id', 'title', 'desc', 'thumbnail', 'category', 'author', 'put_time')
-
-
-
+        fields = ('id','title','desc','thumbnail','pub_time','category','author')
 
 
 class CommentSerizlizer(serializers.ModelSerializer):
-    author = AuthorSerializer()
-    count = serializers.SerializerMethodField()
-
+    author = UserSerializer()
     class Meta:
         model = Comment
-        fields = ('id', 'content', 'author', 'pub_time', 'count')
+        fields = ('id','content','author','pub_time')
 
-    def get_count(self, obj):
-        count = Comment.objects.filter(news_id=obj.news_id).count()
-        return {'count': count}
-
-
-
-
-
+class BannerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Banner
+        fields = ('id','image_url','priority','link_to')

@@ -1,95 +1,104 @@
-from django.shortcuts import render, reverse
-from django.core.exceptions import ObjectDoesNotExist
-from django.http import Http404
+#encoding: utf-8
+from django.shortcuts import render
+from .models import Course,CourseOrder
+import time,hmac,os,hashlib
 from django.conf import settings
-
-
-import os, hmac, hashlib, time
-
-
-from .models import  CourseCategory, Course, CourseOrder
-from common import restful
-from .forms import BuyCourseForm
+from utils import restful
 from apps.xfzauth.decorators import xfz_login_required
+from hashlib import md5
+from django.shortcuts import reverse
+from django.views.decorators.csrf import csrf_exempt
 
-# Create your views here.
+
+def course_index(request):
+    context = {
+        'courses': Course.objects.all()
+    }
+    return render(request,'course/course_index.html',context=context)
 
 
+def course_detail(request,course_id):
+    course = Course.objects.get(pk=course_id)
+    buyed = CourseOrder.objects.filter(course=course,buyer=request.user,status=2).exists()
+    context = {
+        'course': course,
+        'buyed': buyed
+    }
+    return render(request,'course/course_detail.html',context=context)
 
-def index(request):
-    user = request.user
-    courses = Course.objects.select_related('teacher', 'category')
-    if user.is_authenticated:
-        serializer = CourseListSerializer(courses, many=True, context={'author': request.user})
-    else:
-        serializer = CourseListSerializer(courses, many=True, context={'author': ''})
-    data = serializer.data
-    return render(request, 'course/course_index.html', context={'courses': data})
-
-def course_detail(request):
-    """
-    进入到详情页面
-    :param request:
-    :return:
-    """
-    form = BuyCourseForm(request.GET)
-    if form.is_valid():
-        course = form.cleaned_data.get('course_id')
-        return render(request, 'course/course_detail.html', context={
-            'course': course
-        })
-    else:
-        raise Http404
 
 def course_token(request):
+    # video：是视频文件的完整链接
     file = request.GET.get('video')
-    course_id = request.GET.get('course_id')
-    price = request.GET.get('price')
 
-    if float(price) != 0:
-        exists = CourseOrder.objects.filter(author=request.user, course=course_id, status=2).exists()
-        if not exists:
-            return restful.param_error(message='没有购买')
+    course_id = request.GET.get('course_id')
+    if not CourseOrder.objects.filter(course_id=course_id,buyer=request.user,status=2).exists():
+        return restful.params_error(message='请先购买课程！')
+
     expiration_time = int(time.time()) + 2 * 60 * 60
 
     USER_ID = settings.BAIDU_CLOUD_USER_ID
     USER_KEY = settings.BAIDU_CLOUD_USER_KEY
 
+    # file=http://hemvpc6ui1kef2g0dd2.exp.bcevod.com/mda-igjsr8g7z7zqwnav/mda-igjsr8g7z7zqwnav.m3u8
     extension = os.path.splitext(file)[1]
     media_id = file.split('/')[-1].replace(extension, '')
 
+    # unicode->bytes=unicode.encode('utf-8')bytes
     key = USER_KEY.encode('utf-8')
     message = '/{0}/{1}'.format(media_id, expiration_time).encode('utf-8')
     signature = hmac.new(key, message, digestmod=hashlib.sha256).hexdigest()
     token = '{0}_{1}_{2}'.format(signature, USER_ID, expiration_time)
-    return restful.ok(data={'token': token})
+    return restful.result(data={'token': token})
 
 @xfz_login_required
-def course_order(request):
+def course_order(request,course_id):
+    course = Course.objects.get(pk=course_id)
+    order = CourseOrder.objects.create(course=course,buyer=request.user,status=1,amount=course.price)
+    context = {
+        'goods': {
+            'thumbnail': course.cover_url,
+            'title': course.title,
+            'price': course.price
+        },
+        'order': order,
+        # /course/notify_url/
+        'notify_url': request.build_absolute_uri(reverse('course:notify_view')),
+        'return_url': request.build_absolute_uri(reverse('course:course_detail',kwargs={"course_id":course.pk}))
+    }
+    return render(request,'course/course_order.html',context=context)
 
-    form = BuyCourseForm(request.GET)
-    if form.is_valid():
-        course = form.cleaned_data.get('course_id')
-        order = CourseOrder.objects.create(course=course, author=request.user, price=course.price, status=1)
-        return render(request, 'course/course_order.html', context={
-            'course': course,
-            'order': order
-        })
-    else:
-        print(form.get_errors())
-        raise Http404
+
+@xfz_login_required
+def course_order_key(request):
+    goodsname = request.POST.get("goodsname")
+    istype = request.POST.get("istype")
+    notify_url = request.POST.get("notify_url")
+    orderid = request.POST.get("orderid")
+    price = request.POST.get("price")
+    return_url = request.POST.get("return_url")
+
+    token = 'e6110f92abcb11040ba153967847b7a6'
+    uid = '49dc532695baa99e16e01bc0'
+    orderuid = str(request.user.pk)
+
+    print('goodsname:',goodsname)
+    print('istype:',istype)
+    print('notify_url:',notify_url)
+    print('orderid:',orderid)
+    print('price:',price)
+    print('return_url:',return_url)
+
+    key = md5((goodsname + istype + notify_url + orderid + orderuid + price + return_url + token + uid).encode(
+        "utf-8")).hexdigest()
+    return restful.result(data={"key": key})
 
 
-
-
-from .serializers import CourseListSerializer
-def test(request):
-    user = request.user
-    courses = Course.objects.all()
-    if user.is_authenticated:
-        serializer = CourseListSerializer(courses, many=True, context={'author':request.user})
-    else:
-        serializer = CourseListSerializer(courses, many=True, context={'author':''})
-    data = serializer.data
-    return restful.ok(data=data)
-
+@csrf_exempt
+def notify_view(request):
+    orderid = request.POST.get('orderid')
+    print('='*10)
+    print(orderid)
+    print('='*10)
+    CourseOrder.objects.filter(pk=orderid).update(status=2)
+    return restful.ok()

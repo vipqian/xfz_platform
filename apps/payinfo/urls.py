@@ -1,20 +1,13 @@
-# -*- coding: utf-8 -*-#
-
-"""
-Name:           urls.py
-# Author:       wangyunfei
-# Date:         2019-05-06
-# Description:  
-"""
+#encoding: utf-8
 
 from django.urls import path
-
-from . import  views
+from . import views
 
 app_name = 'payinfo'
 
-
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('test/', views.test, name='test'),
+    path('',views.index,name='index'),
+    path('payinfo_order/',views.payinfo_order,name='payinfo_order'),
+    path('notify_url/',views.notify_view,name='notify_view'),
+    path('download/',views.download,name='download')
 ]

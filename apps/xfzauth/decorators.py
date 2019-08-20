@@ -1,26 +1,27 @@
-# -*- coding: utf-8 -*-#
+#encoding: utf-8
+from utils import restful
+from django.shortcuts import redirect
+from functools import wraps
+from django.http import Http404
 
-"""
-Name:           decorators 
-# Author:       wangyunfei
-# Date:         2019-06-18
-# Description:  装饰器
-"""
-from common import restful
-
-
-from django.shortcuts import redirect, reverse
-
-
-def xfz_login_required(fun):
-
-    def wrapper(request, *args, **kwargs):
-
+def xfz_login_required(func):
+    def wrapper(request,*args,**kwargs):
         if request.user.is_authenticated:
-            return fun(request, *args, **kwargs)
+            return func(request,*args,**kwargs)
         else:
             if request.is_ajax():
-                return restful.unAuthor(message='请登录')
+                return restful.unauth(message='请先登录！')
             else:
-                return redirect(reverse('news:index'))
+                return redirect('/')
+
     return wrapper
+
+
+def xfz_superuser_required(viewfunc):
+    @wraps(viewfunc)
+    def decorator(request,*args,**kwargs):
+        if request.user.is_superuser:
+            return viewfunc(request,*args,**kwargs)
+        else:
+            raise Http404()
+    return decorator

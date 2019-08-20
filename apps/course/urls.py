@@ -1,26 +1,15 @@
-#-*- coding: utf-8 -*-
-"""
-@project    : $ {PROJECT_NAME} 
-@Time       : 2019-05-06 15:32
-@Author     : wangyunfei
-@File       : urls.py
-@Describe   :
-"""
+#encoding: utf-8
 
 from django.urls import path
-
 from . import views
-
 
 app_name = 'course'
 
 urlpatterns = [
-    path('index/', views.index, name='index'),
-    path('detail/', views.course_detail, name='course_detail'),
-    path('course_token/', views.course_token, name='course_token'),
-    path('course_order/', views.course_order, name='course_order'),
-    path('test/', views.test, name='test'),
-
-
-
+    path('',views.course_index,name='course_index'),
+    path('<int:course_id>/',views.course_detail,name='course_detail'),
+    path('course_token/',views.course_token,name='course_token'),
+    path('course_order/<int:course_id>/',views.course_order,name='course_order'),
+    path('course_order_key/',views.course_order_key,name="course_order_key"),
+    path('notify_view/',views.notify_view,name='notify_view')
 ]
