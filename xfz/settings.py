@@ -25,7 +25,7 @@ SECRET_KEY = '45$x68m0#&6s6ddde9q5@h^8@sx0q-9ai@&k-)@3_(mxz=7@jo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','192.168.175.129']
+ALLOWED_HOSTS = ['127.0.0.1','192.168.175.129', 'www.qianvipfei.club']
 
 
 # Application definition
