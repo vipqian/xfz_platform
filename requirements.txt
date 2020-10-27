@@ -7,7 +7,7 @@ cli-helpers==1.2.1
 Click==7.0
 configobj==5.0.6
 construct==2.5.3
-cryptography==2.7
+cryptography==3.2
 Django==2.0.2
 django-debug-toolbar==1.9.1
 django-haystack==2.8.1
